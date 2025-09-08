@@ -213,3 +213,4 @@ __marimo__/
 
 setup_users.sql
 secrets.toml
+dbt_user.sql
