@@ -55,6 +55,7 @@ narwhals==2.3.0
 networkx==3.5
 numpy==2.3.2
 ordered-set==4.1.0
+orderly-set==5.5.0
 orjson==3.11.3
 packaging==25.0
 pandas==2.3.2
@@ -108,4 +109,6 @@ typing-extensions==4.15.0
 typing-inspection==0.4.1
 tzdata==2025.2
 urllib3==2.5.0
+watchdog==6.0.0
+win-precise-time==1.4.2
 zipp==3.23.0
