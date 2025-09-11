@@ -1,0 +1,6 @@
+sources:
+  - name: hr_analytics
+    schema: staging
+    tables:
+      - name: stg_ads
+        identifier: raw_jobs

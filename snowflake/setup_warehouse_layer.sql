@@ -34,7 +34,6 @@ GRANT SELECT ON FUTURE VIEWS IN SCHEMA hr_analytics.warehouse TO ROLE hr_dbt_tra
 
 -- test on the new role
 USE ROLE hr_dbt_transformer;
-SELECT * FROM hr_analytics.staging.data_field_hr_analytics LIMIT 10;
 
 SHOW GRANTS ON SCHEMA hr_analytics.warehouse;
 
