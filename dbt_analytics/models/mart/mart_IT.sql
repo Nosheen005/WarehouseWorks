@@ -26,3 +26,5 @@ left join dim_job_details d on d.job_details_id = f.job_details_id
 left join dim_job_description j on j.job_description_id = f.job_description_id
 left join dim_employer e on e.employer_id = f.employer_id
 left join dim_auxilliary_attributes a on a.auxilliary_id = f.auxilliary_id
+
+where o.occupation_field = 'Data/IT'
