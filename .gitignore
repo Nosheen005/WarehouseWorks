@@ -220,3 +220,6 @@ __marimo__/
 setup_users.sql
 secrets.toml
 dbt_user.sql
+
+.env
+setup_user_reporter.sql
