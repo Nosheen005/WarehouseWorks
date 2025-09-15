@@ -18,7 +18,6 @@ def query_job_listings(query='SELECT * FROM mart_construction'):
         role=os.getenv("SNOWFLAKE_ROLE"),
     ) as conn:
 
-        # Execute the query
         df = pd.read_sql(query, conn)
 
         return df
