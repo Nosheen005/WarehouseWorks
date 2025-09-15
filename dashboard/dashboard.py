@@ -120,8 +120,68 @@ def layout_graphs(df):
             ))
         
 def layout_ads(df):
+    cols = st.columns(4)
+    with cols[0]:
+        select_region = st.selectbox('Select region:', df["WORKPLACE_REGION"].unique())
+    with cols[1]:
+        select_occupation = st.selectbox('Select occupation:', df.query('WORKPLACE_REGION == @select_region')["OCCUPATION"].unique())
+    with cols[2]:
+        select_company = st.selectbox('Select company:', df.query('WORKPLACE_REGION == @select_region & OCCUPATION == @select_occupation')["EMPLOYER_NAME"].unique())
+        
+    with cols[3]:
+        select_headline = st.selectbox('Select headline:', df.query('WORKPLACE_REGION == @select_region & OCCUPATION == @select_occupation & EMPLOYER_NAME == @select_company')["HEADLINE"])
+        
     st.markdown("## Job listings data")
-    st.dataframe(df)
+    st.markdown(df.query(
+        "WORKPLACE_REGION == @select_region & OCCUPATION == @select_occupation & HEADLINE == @select_headline & EMPLOYER_NAME == @select_company"
+    )["DESCRIPTION_HTML"].values[0],
+    unsafe_allow_html=True)
+    
+    st.write("")
+    st.write("")
+    st.write("")
+    st.write("")
+    st.write("")
+    st.write("")
+    
+    cols = st.columns(4)
+    with cols[0]:
+        st.markdown("<h4 style= 'color:steelblue'> Vacancies </h4>", unsafe_allow_html=True)
+        st.markdown(df.query('WORKPLACE_REGION == @select_region & OCCUPATION == @select_occupation & HEADLINE == @select_headline & EMPLOYER_NAME == @select_company'
+    )['VACANCIES'].values[0])
+        
+    with cols[1]:
+        st.markdown("<h4 style= 'color:steelblue'> Application deadline </h4>", unsafe_allow_html=True)
+        st.markdown(df.query("WORKPLACE_REGION == @select_region & OCCUPATION == @select_occupation & HEADLINE == @select_headline & EMPLOYER_NAME == @select_company"
+    )['APPLICATION_DEADLINE'].values[0])
+        
+    with cols[2]:
+        st.markdown("<h4 style= 'color:steelblue'> Duration </h4>", unsafe_allow_html=True)
+        st.markdown(f'**{df.query("WORKPLACE_REGION == @select_region & OCCUPATION == @select_occupation & HEADLINE == @select_headline & EMPLOYER_NAME == @select_company"
+    )['DURATION'].values[0]}**')
+        
+    with cols[3]:
+        st.markdown("<h4 style= 'color:steelblue'> Employment type </h4>", unsafe_allow_html=True)
+        st.markdown(df.query("WORKPLACE_REGION == @select_region & OCCUPATION == @select_occupation & HEADLINE == @select_headline & EMPLOYER_NAME == @select_company"
+    )['EMPLOYMENT_TYPE'].values[0])
+    
+    cols = st.columns(4)
+    
+    with cols[0]:
+        st.markdown("<h4 style= 'color:steelblue'> Salary type </h4>", unsafe_allow_html=True)
+        st.markdown(df.query("WORKPLACE_REGION == @select_region & OCCUPATION == @select_occupation & HEADLINE == @select_headline & EMPLOYER_NAME == @select_company"
+    )['SALARY_TYPE'].values[0])
+        
+    with cols[1]:
+        st.markdown("<h4 style= 'color:steelblue'> Job ID </h4>", unsafe_allow_html=True)
+        st.markdown(df.query("WORKPLACE_REGION == @select_region & OCCUPATION == @select_occupation & HEADLINE == @select_headline & EMPLOYER_NAME == @select_company"
+    )['JOB_DESCRIPTION_ID'].values[0])
+        
+    with cols[2]:
+        st.markdown("<h4 style= 'color:steelblue'> Occupation group </h4>", unsafe_allow_html=True)
+        st.markdown(df.query("WORKPLACE_REGION == @select_region & OCCUPATION == @select_occupation & HEADLINE == @select_headline & EMPLOYER_NAME == @select_company"
+    )['OCCUPATION_GROUP'].values[0])
+        
 
     
 if page == "Start":
