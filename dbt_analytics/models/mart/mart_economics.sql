@@ -18,7 +18,9 @@ select
     d.salary_type,
     d.duration,
     e.workplace_region,
-    j.job_description_id
+    j.job_description_id,
+    j.description_html,
+     o.occupation_group
 
 from fct_job_ads f
 left join dim_occupation o on o.occupation_id = f.occupation_id

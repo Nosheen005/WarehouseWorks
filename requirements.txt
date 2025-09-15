@@ -111,5 +111,5 @@ typing-inspection==0.4.1
 tzdata==2025.2
 urllib3==2.5.0
 watchdog==6.0.0
-win-precise-time==1.4.2
 zipp==3.23.0
+
