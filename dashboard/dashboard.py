@@ -2,18 +2,20 @@ import streamlit as st
 from connect_data_warehouse import query_job_listings
 import altair as alt
 import pandas as pd
-mart = 'mart_construction'
-query = f'SELECT * FROM {mart}'
+
 st.set_page_config(layout="wide")
-st.sidebar.header("Pages")  
-page = st.sidebar.radio("Gå till", ["Start", "job ad"])
-df_test = query_job_listings(query)
+# st.sidebar.header("Menu")  
+page = st.sidebar.radio("Meny", ["Start", "Annonser"])
+page2 = st.sidebar.radio("Data", ["Bygg och anläggning", "Data/IT", "Administration, ekonomi, juridik"])
 
-def layout_graphs(df):
 
-    st.title("Construction job ads")
+
+
+def layout_graphs(df, mart, name):
+
+    st.title(f"{name}-annonser")
     st.write(
-        "This dashboard shows construction job ads from arbetsförmedlingens API. "
+        f"En dashboard som visar annonser från arbetsförmedlingens API. "
     )
     
     cols = st.columns(2)
@@ -28,9 +30,9 @@ def layout_graphs(df):
         )
         
     df_employer = query_job_listings(
-        """
+        f"""
             SELECT SUM(VACANCIES) AS VACANCIES, EMPLOYER_NAME
-            FROM mart_construction
+            FROM {mart}
             GROUP BY EMPLOYER_NAME
             ORDER BY VACANCIES DESC
             LIMIT 10
@@ -38,9 +40,9 @@ def layout_graphs(df):
         ) 
     
     df_occupation = query_job_listings(
-        """
+        f"""
             SELECT SUM(VACANCIES) AS VACANCIES, OCCUPATION
-            FROM mart_construction
+            FROM {mart}
             GROUP BY OCCUPATION
             ORDER BY VACANCIES DESC
             LIMIT 10
@@ -48,9 +50,9 @@ def layout_graphs(df):
         ) 
     
     df_region = query_job_listings(
-        """
+        f"""
             SELECT SUM(VACANCIES) AS VACANCIES, WORKPLACE_REGION
-            FROM mart_construction
+            FROM {mart}
             GROUP BY WORKPLACE_REGION
             ORDER BY VACANCIES DESC
             LIMIT 10
@@ -58,9 +60,9 @@ def layout_graphs(df):
         ) 
     
     df_duration = query_job_listings(
-        """
+        f"""
             SELECT SUM(VACANCIES) AS VACANCIES, DURATION
-            FROM mart_construction
+            FROM {mart}
             GROUP BY DURATION
             ORDER BY VACANCIES DESC
             LIMIT 10
@@ -183,11 +185,24 @@ def layout_ads(df):
     )['OCCUPATION_GROUP'].values[0])
         
 
+
+if page2 == "Bygg och anläggning":
+    df_test = query_job_listings('SELECT * FROM mart_construction')
+    mart = "mart_construction"
+    name = "Bygg och anläggning"
+elif page2 == "Data/IT":
+    df_test = query_job_listings('SELECT * FROM mart_it')
+    mart = "mart_it"
+    name = "Data/IT"
+elif page2 == "Administration, ekonomi, juridik":
+    df_test = query_job_listings('SELECT * FROM mart_economics')
+    mart = "mart_economics"
+    name = "Administration, ekonomi, juridik"
+
     
 if page == "Start":
-    st.title("Välkommen till dashboarden")
-    layout_graphs(df_test)
-elif page == "job ad":
+    layout_graphs(df_test, mart, name)
+elif page == "Annonser":
     layout_ads(df_test)
 
 
