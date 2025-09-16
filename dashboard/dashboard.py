@@ -159,8 +159,8 @@ def layout_ads(df):
         
     with cols[2]:
         st.markdown("<h4 style= 'color:steelblue'> Duration </h4>", unsafe_allow_html=True)
-        st.markdown(f'**{df.query("WORKPLACE_REGION == @select_region & OCCUPATION == @select_occupation & HEADLINE == @select_headline & EMPLOYER_NAME == @select_company"
-    )['DURATION'].values[0]}**')
+        st.markdown(df.query("WORKPLACE_REGION == @select_region & OCCUPATION == @select_occupation & HEADLINE == @select_headline & EMPLOYER_NAME == @select_company"
+    )['DURATION'].values[0])
         
     with cols[3]:
         st.markdown("<h4 style= 'color:steelblue'> Employment type </h4>", unsafe_allow_html=True)
