@@ -17,5 +17,5 @@ select
     occupation__label as occupation,
     COALESCE(number_of_vacancies, 1) as vacancies,
     relevance,
-    application_deadline
+    to_date(application_deadline) as application_deadline
 from stg_job_ads
