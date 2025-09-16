@@ -10,6 +10,7 @@ select
     COALESCE(experience_required, FALSE) as experience_required,
     COALESCE(access_to_own_car, FALSE) as access_to_own_car,
     COALESCE(driving_license_required, FALSE) as driving_license_required,
+    {{ capitalize_first_letter("COALESCE(workplace_address__region, 'Ospecifierad')") }} as workplace_region,
     scope_of_work__min as scope_of_work_min,
     scope_of_work__max as scope_of_work_max,
     employer__name as employer_name,
