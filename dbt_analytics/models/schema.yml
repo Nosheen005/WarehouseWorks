@@ -40,8 +40,6 @@ models:
               field: job_description_id
           - not_null
           - unique
-        
-
       - name: relevance
       description: "Score between 0 and 1 representing the relevance of the ad."
         tests:
@@ -50,7 +48,6 @@ models:
               max_value: 1
           - dbt_expectations.expect_column_values_to_be_of_type:
               column_type: float
-
       - name: vacancies
       description: "Number of open positions available in the job ad."
         tests:
@@ -113,24 +110,17 @@ models:
           - not_null
 
 
-
-
   - name: dim_occupation
   description: "Dimension table containing standardized occupations, groups, and fields."
     columns:
       - name: occupation_id
-        description: "Surrogate key generated from occupation."
         tests:
           - not_null
           - unique
-
-
       - name: occupation
-        description: "Occupation name (grouping key)."
         tests:
           - not_null
           - unique
- 
       - name: occupation_group
       description: "Broader group classification the occupation belongs to."
         tests:
@@ -139,56 +129,74 @@ models:
       description: "Field or domain associated with the occupation."
         tests:
           - not_null
-
+          
+          
   - name: dim_auxilliary_attributes
+    description: "Dimension table capturing auxiliary attributes that describe requirements attached to job advertisements. Each row represents a unique combination of job-related additional criteria such as required experience, mobility, and licensing. This dimension enriches fact tables with standardized requirement attributes"
     columns:
       - name: auxilliary_id
+        description: "Surrogate key uniquely identifying each auxiliary attribute record."
         tests:
           - not_null
           - unique
       - name: experience_required
+        description: "Indicates whether prior job experience is required for the role (true/false)."
         tests:
           - not_null
       - name: access_to_own_car
+        description: "Flags if the applicant must have access to their own car for the job (true/false)."
         tests:
           - not_null
       - name: driving_license_required
+        description: "Indicates if a valid driving license is mandatory for the position (true/false)."
         tests:
           - not_null
 
 
   - name: dim_job_description 
+    description: "Dimension table storing standardized textual content from job advertisement. Each row represents a unique job description with both headline information and detailed ad content in plain text and HTML.This table allows consistent referencing of job ad texts across analysis layers."
     columns:
       - name: job_description_id
+        description: "Unique identifier for each job description record, ensuring entity integrity."
         tests:
           - not_null
           - unique
       - name: headline
+        description: "Headline or title of the job advertisement (short textual summary)."
         tests:
           - not_null
       - name: description_text
+        description: "Plain text version of the job description, stripped of formatting."
         tests:
           - not_null
       - name: description_html
+        description: "HTML-formatted version of the job description, preserving original formatting from source systems."
         tests:
           - not_null
 
+
   - name: dim_job_details
+    description: "Dimension table standardizing job detail attributes. Each row represents a distinct combination of employment conditions enriched with a surrogate key (job_details_id). The table is used to link job advertisements to their corresponding employment characteristics in a consistent way."
     columns:
       - name: job_details_id
+        description: "Surrogate key uniquely identifying each distinct set of job details."
         tests:
           - not_null
           - unique
       - name: employment_type
+        description: "Type of employment (full-time, part-time, contract)."
         tests:
           - not_null
       - name: salary_type
+        description: "Structure of compensation (fixed, hourly, commission-based)."
         tests:
           - not_null
       - name: duration
+        description: "Expected or defined duration of the employment/contract."
         tests:
           - not_null
       - name: scope_of_work_max
+        description: "Maximum expected workload (max hours per week) capped by a business rule (0-100)."
         tests:
           - dbt_expectations.expect_column_max_to_be_between:
               min_value: 0
@@ -196,11 +204,10 @@ models:
               config:
                 severity: warn   
       - name: scope_of_work_min
+        description: "Minimum expected workload ( min hours per week) capped by a business rule (0-100)."
         tests:
           - dbt_expectations.expect_column_max_to_be_between:
               min_value: 0
               max_value: 100
               config:
                 severity: warn
-
-
