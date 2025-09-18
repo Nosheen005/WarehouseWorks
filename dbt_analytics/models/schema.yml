@@ -114,10 +114,12 @@ models:
     description: "Dimension table containing standardized occupations, groups, and fields."
     columns:
       - name: occupation_id
+        description: "Surrogate key generated from occupation."
         tests:
           - not_null
           - unique
       - name: occupation
+        description: "Occupation name (grouping key)."
         tests:
           - not_null
           - unique
