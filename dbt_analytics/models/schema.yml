@@ -5,35 +5,35 @@ models:
     description: "Fact table of job advertisements, linking each posting to occupations, employers, job details, and related attributes."
     columns:
       - name: occupation_id
-      description: "Reference to the occupation classification of the job ad."
+        description: "Reference to the occupation classification of the job ad."
         tests:
           - relationships:
               to: ref('dim_occupation')
               field: occupation_id
           - not_null
       - name: auxilliary_id
-      description: "Reference to supplementary job attributes."
+        description: "Reference to supplementary job attributes."
         tests: 
           - relationships:
               to: ref('dim_auxilliary_attributes')
               field: auxilliary_id 
           - not_null
       - name: employer_id
-      description: "Reference to the employer posting the job."
+        description: "Reference to the employer posting the job."
         tests: 
           - relationships:
               to: ref('dim_employer')
               field: employer_id
           - not_null
       - name: job_details_id
-      description: "Reference to detailed job specifications."
+        description: "Reference to detailed job specifications."
         tests: 
           - relationships:
               to: ref('dim_job_details')
               field: job_details_id
           - not_null
       - name: job_description_id
-      description: "Reference to the job description text."
+        description: "Reference to the job description text."
         tests: 
           - relationships:
               to: ref('dim_job_description')
@@ -41,7 +41,7 @@ models:
           - not_null
           - unique
       - name: relevance
-      description: "Score between 0 and 1 representing the relevance of the ad."
+        description: "Score between 0 and 1 representing the relevance of the ad."
         tests:
           - dbt_expectations.expect_column_values_to_be_between:
               min_value: 0
@@ -49,7 +49,7 @@ models:
           - dbt_expectations.expect_column_values_to_be_of_type:
               column_type: float
       - name: vacancies
-      description: "Number of open positions available in the job ad."
+        description: "Number of open positions available in the job ad."
         tests:
           - dbt_expectations.expect_column_quantile_values_to_be_between:
               quantile: .99
@@ -63,55 +63,55 @@ models:
           - dbt_expectations.expect_column_values_to_be_of_type:
               column_type: number
       - name: application_deadline
-      description: "Date by which applications must be submitted."
+        description: "Date by which applications must be submitted."
         tests: 
           - not_null
         
 
   - name: dim_employer
-  description: "Dimension table containing unique employers and their workplace details."
+    description: "Dimension table containing unique employers and their workplace details."
     columns:
       - name : employer_id
-      description: "Surrogate key uniquely identifying an employer record."
+        description: "Surrogate key uniquely identifying an employer record."
         tests:
           - not_null
           - unique
       - name: employer_name
-      description: "Official name of the employer, used as a grouping key."
+        description: "Official name of the employer, used as a grouping key."
         tests:
           - not_null
       - name : employer_workplace
-      description: "Name of the employer’s workplace or site."
+        description: "Name of the employer’s workplace or site."
         tests:
           - not_null
       - name : workplace_street_address
-      description: "Street address of the employer’s workplace."
+        description: "Street address of the employer’s workplace."
         tests:
           - not_null
       - name : workplace_region
-      description: "Region where the employer’s workplace is located."
+        description: "Region where the employer’s workplace is located."
         tests:
           - not_null
       - name : workplace_postcode
-      description: "Postal code of the employer’s workplace."
+        description: "Postal code of the employer’s workplace."
         tests:
           - not_null
       - name : workplace_city
-      description: "City where the employer’s workplace is located."
+        description: "City where the employer’s workplace is located."
         tests:
           - not_null
       - name : workplace_country
-      description: "Country where the employer’s workplace is located."
+        description: "Country where the employer’s workplace is located."
         tests:
           - not_null
       - name : employer_organization_number
-      description: "Legal organization or registration number of the employer."
+        description: "Legal organization or registration number of the employer."
         tests:
           - not_null
 
 
   - name: dim_occupation
-  description: "Dimension table containing standardized occupations, groups, and fields."
+    description: "Dimension table containing standardized occupations, groups, and fields."
     columns:
       - name: occupation_id
         tests:
@@ -122,11 +122,11 @@ models:
           - not_null
           - unique
       - name: occupation_group
-      description: "Broader group classification the occupation belongs to."
+        description: "Broader group classification the occupation belongs to."
         tests:
           - not_null
       - name: occupation_field
-      description: "Field or domain associated with the occupation."
+        description: "Field or domain associated with the occupation."
         tests:
           - not_null
           
